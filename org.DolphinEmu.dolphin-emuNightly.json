@@ -121,7 +121,6 @@
         "-DENABLE_ALSA=OFF",
         "-DENABLE_SDL=ON",
         "-DENABLE_EVDEV=OFF",
-        "-DDISTRIBUTOR=Flathub",
         "-DENABLE_QT2=FALSE",
         "-DGTK2_GDKCONFIG_INCLUDE_DIR=/app/include/gtk-2.0/gdk/;/app/lib/gtk-2.0/include"
       ],
