@@ -1,5 +1,5 @@
 {
-  "app-id": "org.DolphinEmu.dolphin-emu",
+  "app-id": "org.DolphinEmu.dolphin-emuNightly",
   "branch": "stable",
   "runtime": "org.freedesktop.Platform",
   "runtime-version": "1.6",
