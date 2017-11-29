@@ -8,6 +8,7 @@
   "rename-desktop-file": "dolphin-emu.desktop",
   "rename-icon": "dolphin-emu",
   "rename-appdata-file": "dolphin-emu.appdata.xml",
+  "desktop-file-name-prefix": "(Nightly) ",
   "finish-args": [
     "--device=all",
     "--filesystem=host:ro",
@@ -17,6 +18,62 @@
     "--share=network"
   ],
   "modules": [
+    {
+      "name": "gtk2",
+      "rm-configure": true,
+      "cleanup": [
+         "/bin",
+         "/include",
+         "/share/bakefile",
+         "/share/aclocal"
+      ],
+      "config-opts": [
+        "--disable-cups"
+      ],
+      "sources": [
+         {
+             "type": "archive",
+             "url": "http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.31.tar.xz",
+             "sha256":"68c1922732c7efc08df4656a5366dcc3afdc8791513400dac276009b40954658"
+         },
+         {
+             "type": "script",
+             "dest-filename": "autogen.sh",
+             "commands": [
+                 "cp -p /usr/share/automake-*/config.{sub,guess} .",
+                 "autoconf -f -B build/autoconf_prepend-include"
+             ]
+         }
+      ]
+    },
+    {
+      "name": "libusb",
+      "rm-configure": true,
+      "cleanup": [
+         "/bin",
+         "/include",
+         "/share/bakefile",
+         "/share/aclocal"
+      ],
+      "config-opts": [
+        "--disable-udev"
+      ],
+      "sources": [
+         {
+             "type": "archive",
+             "url": "https://github.com/libusb/libusb/releases/download/v1.0.21/libusb-1.0.21.tar.bz2",
+             "sha256":"7dce9cce9a81194b7065ee912bcd55eeffebab694ea403ffb91b67db66b1824b"
+         },
+         {
+             "type": "script",
+             "dest-filename": "autogen.sh",
+             "commands": [
+                 "cp -p /usr/share/automake-*/config.{sub,guess} .",
+                 "autoconf -f -B build/autoconf_prepend-include"
+             ]
+         }
+      ]
+    },
     {
       "name": "wxWidgets",
       "rm-configure": true,
@@ -44,8 +101,8 @@
       "sources": [
          {
              "type": "archive",
-             "url": "https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.3.1/wxWidgets-3.0.3.1.tar.bz2",
-             "sha256":"3164ad6bc5f61c48d2185b39065ddbe44283eb834a5f62beb13f1d0923e366e4"
+             "url": "https://github.com/wxWidgets/wxWidgets/releases/download/v3.1.0/wxWidgets-3.1.0.tar.bz2",
+             "sha256":"e082460fb6bf14b7dd6e8ac142598d1d3d0b08a7b5ba402fdbf8711da7e66da8"
          },
          {
              "type": "script",
@@ -64,7 +121,9 @@
         "-DENABLE_ALSA=OFF",
         "-DENABLE_SDL=ON",
         "-DENABLE_EVDEV=OFF",
-        "-DDISTRIBUTOR=Flathub"
+        "-DDISTRIBUTOR=Flathub",
+        "-DENABLE_QT2=FALSE",
+        "-DGTK2_GDKCONFIG_INCLUDE_DIR=/app/include/gtk-2.0/gdk/;/app/lib/gtk-2.0/include"
       ],
       "build-options": {
         "arch": {
@@ -81,17 +140,8 @@
       ],
       "sources": [
         {
-          "type": "archive",
-          "url": "https://github.com/dolphin-emu/dolphin/archive/5.0.tar.gz",
-          "sha256": "62c4602055767ab314ff50a3b94ea57f792832aa1629e6b1117ebce10518dc0b"
-        },
-        {
-          "type": "patch",
-          "path": "dolphin-emu-5.0-gtk3.patch"
-        },
-        {
-          "type": "patch",
-          "path": "6033250bebe9f5dcec47c4e2ec8e5d3b102f73e7.patch"
+          "type": "git",
+          "url": "https://github.com/dolphin-emu/dolphin"
         },
         {
           "type": "file",
